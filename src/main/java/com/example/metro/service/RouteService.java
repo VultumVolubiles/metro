@@ -26,7 +26,6 @@ public class RouteService {
      * @return found routes
      */
     public List<Route> searchRoutes(Long from, Long to, int limit) {
-        System.out.println("--------------------------------------------------------------------");
         Station fromStation = repository.findOneById(from);
         if(fromStation == null)
             throw new NullPointerException("Station From not found");
