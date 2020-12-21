@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_links
+      author: VetlJava
+      changes:
+        - createTable:
+            tableName: links
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: id_station_a
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_links_station_a
+                    references: stations(id)
+              - column:
+                  name: id_station_b
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_links_station_b
+                    references: stations(id)
+              - column:
+                  name: time
+                  type: INT
+                  constraints:
+                    nullable: false

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Search metro route</title>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
+<div style="background-color:black; height: 5px; width:100%; margin: 10px 0px;"></div>
+<div>
+    <div style="float:left;width:48%">
+        <img src="/static/spb_metro.jpg" style="max-width:100%; height:600px;">
+    </div>
+    <div style="float:right;width:48%">
+        <form th:action="@{/station/query}" th:object="${filter}" method="post">
+            <div style="width:100%">
+                <label>Last queries</label>
+                <select th:field="*{query}">
+                    <option th:each="i : ${queries}" th:value="${i.id}" th:text="${#strings.toString(i)}"></option>
+                </select>
+                <button type="submit">use</button>
+            </div>
+        </form>
+        <form th:action="@{/station/search}" th:object="${filter}" method="post">
+            <div style="display: inline-flex;">
+                <span>
+                    <label>From station</label>
+                    <select th:field="*{from}">
+                        <option th:each="i : ${stations}" th:value="${i.id}" th:text="${i.name}"></option>
+                    </select>
+                </span>
+                <span>
+                    <label>To station</label>
+                    <select th:field="*{to}">
+                        <option th:each="i : ${stations}" th:value="${i.id}" th:text="${i.name}"></option>
+                    </select>
+                </span>
+            </div>
+            <div>
+<!--                <span>-->
+<!--                    <label>Result limit(default 2)</label>-->
+<!--                    <input type="number" step="1" min="1" th:field="*{limit}"/>-->
+<!--                </span>-->
+                <span><button type="submit">Search</button></span>
+            </div>
+        </form>
+    </div>
+</div>
+<div style="background-color:black; height: 5px; width:100%; margin: 10px 0px; display:flex;"></div>
+<div style="display: inline-block;">
+    <label style="font-weight: bold;font-size: x-large;"
+           th:if="${not #lists.isEmpty(routes)}">
+        Search route results:
+    </label>
+    <p th:each="i : ${routes}" th:text="${#strings.toString(i)}"></p>
+</div>
+</body>
+</html>

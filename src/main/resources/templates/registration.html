@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Search metro route | Registration</title>
+</head>
+<body>
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <form th:action="@{/registration}" th:object="${user}" method="post">
+        <div>
+            <label>Login</label>
+            <input th:field="*{login}"/>
+            <p th:each="error: ${#fields.errors('login')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" th:field="*{password}"/>
+            <p th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label>Confirm password</label>
+            <input type="password" th:field="*{confirmPassword}"/>
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+</html>

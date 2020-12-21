@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_lines
+      author: VetlJava
+      changes:
+        - createTable:
+            tableName: lines
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: color
+                  type: CHARACTER VARYING
+                  constraints:
+                    unique: true
+                    nullable: false

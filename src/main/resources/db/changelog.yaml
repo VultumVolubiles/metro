@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: version 1
+      author: generated
+  - include:
+      file: migrations/01_create_table_users.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: migrations/02_create_table_lines.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: migrations/03_create_table_stations.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: migrations/04_create_table_links.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: migrations/05_create_table_queries.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: migrations/06_insert_lines.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: migrations/07_insert_stations.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: migrations/08_insert_links.yaml
+      relativeToChangelogFile: true

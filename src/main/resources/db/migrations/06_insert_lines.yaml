@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_lines
+      author: VetlJava
+      changes:
+        - insert:
+            tableName: lines
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: color
+                  value: "RED"
+        - insert:
+            tableName: lines
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: color
+                  value: "BLUE"
+        - insert:
+            tableName: lines
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: color
+                  value: "GREEN"
+        - insert:
+            tableName: lines
+            columns:
+              - column:
+                  name: id
+                  value: 4
+              - column:
+                  name: color
+                  value: "ORANGE"
