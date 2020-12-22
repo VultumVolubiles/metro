@@ -111,13 +111,13 @@ public class RouteService {
      */
     private List<Route> multiColorRoutes(Station from, Station to, Set<Station> exclude) {
         List<Route> result = new ArrayList<>();
-        // Добавляем станцию с которой мы пришли в список станций, где мы уже были
+        // Adding station from which we came to list of stations where we have already been
         Set<Station> afterExclude = new HashSet<>(exclude);
         Set<Station> beforeExclude = new HashSet<>(exclude);
         afterExclude.add(from);
         beforeExclude.add(from);
 
-        // Находим все станции, которые находятся на одной линии с from и соединены с другими линиями метро
+        // Find all stations that are on same line with 'from' and are connected to other metro lines
         List<Station> toHandle = repository.findAllByLine(from.getLine())
                 .stream()
                 .filter(Station::hasMulticolorLinks)
@@ -133,7 +133,7 @@ public class RouteService {
                 .collect(Collectors.toList());
 
         beforeFrom.forEach(s -> {
-            // Находим все Связи этой станции которые связаны со станциями других линий метро
+            // Find all Links of this station which connected to other metro lines stations
             beforeExclude.add(s);
             List<Link> multicolorLinks = s.getLinks().stream().filter(Link::isMulticolor).collect(Collectors.toList());
             for (Link l : multicolorLinks)
@@ -141,7 +141,7 @@ public class RouteService {
         });
 
         afterFrom.forEach(s -> {
-            // Находим все Связи этой станции которые связаны со станциями других линий метро
+            // Find all Links of this station which connected to other metro lines stations
             afterExclude.add(s);
             List<Link> multicolorLinks = s.getLinks().stream().filter(Link::isMulticolor).collect(Collectors.toList());
             for (Link l : multicolorLinks)
@@ -171,29 +171,29 @@ public class RouteService {
         else
             reverse = link.isReverse(s, link.getA());
 
-        // Берём следущую станцию из текущей связи
+        // Get next station from current link
         Station next = reverse ? link.getA() : link.getB();
 
-        // Если мы уже были в next станции, то пропускаем её
+        // if already have been in next station then skip her
         if (exclude.contains(next)) {
             return;
         }
 
-        // Если s != from, то прокладываем маршрут от from до s, и наче создаём пустой маршрту
+        // If s != from, build route from 'from' to 's', else create new Route
         Route route = s.equals(from) ? new Route() : solidColorRoute(from, s);
         route.append(new LinkWrapper(link, reverse));
 
-        // Проверяем имеет ли другая линия тот же цвет что у конечного пункта нашего маршрута
+        // Check if the next line has the same color as endpoint of our route
         if (next.getColor().equals(to.getColor())) {
-            if (link.hasStation(to)) {// Если другая станция является конечной точкой маршрута - добавляем
+            if (link.hasStation(to)) {// If next station is route endpoint - add
                 result.add(route);
             }
-            else { // Инача делаем маршрут от следующей станции до конечного пункта
+            else { // build route from next station to route endpoint
                 Route end = solidColorRoute(next, to);
                 result.add(concat(route, end));
             }
         } else {
-            // Находим варианты продолжения маршрута и объединяем их с уже существующим
+            // find options for continuing the route and combine them with the route begin
             List<Route> endings = multiColorRoutes(next, to, exclude);
             result.addAll(concat(route, endings));
         }
